@@ -1,0 +1,63 @@
+body {
+    font-family: Futura, Arial, sans-serif;
+    margin: 0 12px 20px;
+
+    background-image: url(/macow/images/pattwg.png);
+    background-repeat: repeat-x;
+}
+h1 {
+    color:#434343;
+}
+a {
+    text-decoration:none;
+}
+
+.page {
+    width:80%;
+    margin-left:auto;margin-right:auto;
+}
+.req {
+    margin-bottom:25px;
+}
+.username {
+    color:#929292;
+}
+.request_Open {
+    padding:5px;
+    color:whitesmoke;
+    background-color:#e5cb6c;
+}
+.request_Closed {
+    padding:5px;
+    color:whitesmoke;
+    background-color:#6cc0e5;
+}
+.request_Claimed {
+    padding:5px;
+    color:whitesmoke;
+    background-color:#77d991;
+}
+.gen_info {
+    float:left;
+    color:#929292;
+    font-size:0.7em;
+}
+.gen_info a {
+    color:#929292;
+}
+.gen_info a:hover{
+    text-decoration:underline;
+}
+.mod_comment {
+    float:right;
+    color:#434343;
+}
+.empty {
+    color:#434343;
+    text-align:center;
+    font-size:1.3em;
+}
+.elapsed {
+    color:#929292;
+    font-size:0.65em;
+}
