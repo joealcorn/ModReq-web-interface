@@ -10,36 +10,6 @@
         {% else %}
             <span class="empty">No modrequests have been made yet! Mods, put your feet up!</span>
         {% endfor %}
-    
-    
-    {#    
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Username</th>
-                <th>Time</th>
-                <th>Handled by</th>
-                <th>Request</th>
-                <th>Status</th>
-            </tr>
-                {% for entry in entries %}
-                    <span><tr>
-                        <td>{{ entry.id }}</td>
-                        <td>{{ entry.player }}</td>
-                        <td>{{ entry.time }}</td>
-                        <td>{{ entry.mod }}</td>
-                        <td>{{ entry.request }}</td>
-                        <td>{{ entry.status }}</td>
-                    </tr>
-                    {% if entry.comment %}
-                        <p>{{ entry.comment }}</p>
-                    {% endif %}
-                    </span>
-                {% else %}
-                    <em>Unbelievable.  No entries here so far</em>
-                {% endfor %}
-        </table>
-    #}
   </div>
   <span class="elapsed">Page generated in {{ elapsed }} seconds</span>
 {% endblock %}
