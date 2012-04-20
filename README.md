@@ -5,3 +5,4 @@ Lists mod requests, their status and other relevant information made using the [
 
 Requires Flask & sqlite3
 
+[example](http://buttscicl.es/stuff/modreq/)
