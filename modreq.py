@@ -1,4 +1,4 @@
-from flask import Flask, render_template, g
+from flask import Flask, render_template, g, redirect, url_for, flash
 import sqlite3, datetime, time, pretty_age
 
 
@@ -22,6 +22,24 @@ def index():
     start = time.time()
     cur = g.db.execute('select id, player_name, assigned_mod, request_time, request, close_message, status from modreq_requests order by id desc')
     requests = [dict(id=row[0], player=row[1], mod=row[2], time=row[3], request=row[4], comment=row[5], status=row[6]) for row in cur.fetchall()]
+    requests = format(requests)
+
+    return render_template('show.html', requests=requests, elapsed=(time.time() - start))
+
+@app.route('/player/<username>/')
+def player(username):
+    start = time.time()
+    cur = g.db.execute('select id, player_name, assigned_mod, request_time, request, close_message, status from modreq_requests where player_name = ? order by id desc', [username])
+    requests = [dict(id=row[0], player=row[1], mod=row[2], time=row[3], request=row[4], comment=row[5], status=row[6]) for row in cur.fetchall()]
+    if requests == []:
+        flash("That user hasn't made any requests")
+        return redirect(url_for('index'))
+
+    requests = format(requests)
+
+    return render_template('show.html', requests=requests, elapsed=(time.time() - start))
+
+def format(requests):
     for request in requests:
         if request['status'] == 2:
             request['status'] = 'Open'
@@ -32,7 +50,7 @@ def index():
         if request['comment'] == None:
             request['comment'] = ''
         request['time'] = pretty_age.get_age((datetime.datetime.fromtimestamp(request['time']/1000)))
-    return render_template('show.html', requests=requests, elapsed=(time.time() - start))
+    return requests
     
 if __name__ == '__main__':
     app.run()
