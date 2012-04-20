@@ -3,9 +3,9 @@
     <div id="requests">
         {% for req in requests %}        
             <div class="req">
-                <div class="req_info" id="{{ req.id }}"><a href="player/{{ req.player }}"><span class="username">{{ req.player }}</span></a></div>
+                <div class="req_info" id="{{ req.id }}"><a href="{{ url_for('player', username=req.player) }}"><span class="username">{{ req.player }}</span></a></div>
                 <div class="request_{{ req.status }}">{{ req.request }}</div>
-                <div class=""><span class="gen_info"><a href="#{{ req.id }}">#{{ req.id }}</a> • {{ req.time }} ago • {{ req.status }}</span>{% if req.status != 'Open' %}<span class="mod_comment">{{ req.comment }}  <span class="username">{{ req.mod }}</span></span>{% endif %}</div>
+                <div class=""><span class="gen_info"><a href="#{{ req.id }}">#{{ req.id }}</a> • {{ req.time }} ago • {{ req.status }}</span>{% if req.status != 'Open' %}<span class="mod_comment">{{ req.comment }}  <a href="{{ url_for('moderator', username=req.mod) }}"><span class="username">{{ req.mod }}</span></a></span>{% endif %}</div>
             </div>
         {% else %}
             <span class="empty">No modrequests have been made yet! Mods, put your feet up!</span>

@@ -29,10 +29,23 @@ def index():
 @app.route('/player/<username>/')
 def player(username):
     start = time.time()
-    cur = g.db.execute('select id, player_name, assigned_mod, request_time, request, close_message, status from modreq_requests where player_name = ? order by id desc', [username])
+    cur = g.db.execute('select id, player_name, assigned_mod, request_time, request, close_message, status from modreq_requests where lower(player_name) = ? order by id desc', [username.lower()])
     requests = [dict(id=row[0], player=row[1], mod=row[2], time=row[3], request=row[4], comment=row[5], status=row[6]) for row in cur.fetchall()]
     if requests == []:
         flash("That user hasn't made any requests")
+        return redirect(url_for('index'))
+
+    requests = format(requests)
+
+    return render_template('show.html', requests=requests, elapsed=(time.time() - start))
+
+@app.route('/mod/<username>/')
+def moderator(username):
+    start = time.time()
+    cur = g.db.execute('select id, player_name, assigned_mod, request_time, request, close_message, status from modreq_requests where lower(assigned_mod) = ? order by id desc', [username.lower()])
+    requests = [dict(id=row[0], player=row[1], mod=row[2], time=row[3], request=row[4], comment=row[5], status=row[6]) for row in cur.fetchall()]
+    if requests == []:
+        flash("That user hasn't handled any requests")
         return redirect(url_for('index'))
 
     requests = format(requests)

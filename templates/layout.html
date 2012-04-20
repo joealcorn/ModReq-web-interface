@@ -2,7 +2,7 @@
 <title>ModReq</title>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 <div class="page">
-  <h1>ModReq</h1>
+  <a href="{{ url_for('index') }}"><h1>ModReq</h1></a>
   <div class="metanav">
   </div>
   {% for message in get_flashed_messages() %}
