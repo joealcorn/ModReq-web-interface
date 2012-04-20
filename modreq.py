@@ -51,6 +51,12 @@ def format(requests):
             request['comment'] = ''
         request['time'] = pretty_age.get_age((datetime.datetime.fromtimestamp(request['time']/1000)))
     return requests
+
+@app.errorhandler(404)
+def error_404(error):
+    flash("404: That page could not be found.")
+    return index()
+
     
 if __name__ == '__main__':
     app.run()
