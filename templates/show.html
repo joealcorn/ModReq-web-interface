@@ -11,5 +11,5 @@
             <span class="empty">No modrequests have been made yet! Mods, put your feet up!</span>
         {% endfor %}
   </div>
-  <span class="elapsed">Page generated in {{ elapsed }} seconds</span>
+  <span class="elapsed">Page generated in {{ elapsed }} seconds |</span>   {% if config.ENABLE_GRAPHS %}<a href="{{ url_for('stats') }}"><span class="stats_link">Other stats</span></a>{% endif %}
 {% endblock %}

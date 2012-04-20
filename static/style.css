@@ -23,6 +23,19 @@ a {
     width:80%;
     margin-left:auto;margin-right:auto;
 }
+.stats_page {
+    color:#434343;
+    border: 2px solid #929292;
+    width:700px;
+    margin:auto;
+    padding-left:25px;padding-right:25px;
+    padding-top:10px;
+    padding-bottom:20px;
+}
+.stats_link {
+    color:#929292;
+    font-size:0.7em;
+}
 .req {
     margin-bottom:25px;
 }
@@ -67,4 +80,8 @@ a {
 .elapsed {
     color:#929292;
     font-size:0.65em;
+}
+.graph {
+    display:block;
+    margin-left:auto;margin-right:auto;
 }

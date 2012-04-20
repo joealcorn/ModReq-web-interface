@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block body %}
+    <div class="stats_page">
+    <p>Requests per day</p>
+        <a href="{{ url_for('static', filename='per_day.svg') }}"><img class="graph" src="{{ url_for('static', filename='per_day.png') }}"></a><br>
+    <p>Busiest mods</p>
+        <a href="{{ url_for('static', filename='bar_totals.svg') }}"><img class="graph" src="{{ url_for('static', filename='bar_totals.png') }}"></a><br>
+        <a href="{{ url_for('static', filename='donut_totals.svg') }}"><img class="graph" src="{{ url_for('static', filename='donut_totals.png') }}"></a>
+    </div>
+{% endblock %}

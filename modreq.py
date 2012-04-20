@@ -1,5 +1,5 @@
-from flask import Flask, render_template, g, redirect, url_for, flash
-import sqlite3, datetime, time, pretty_age
+from flask import Flask, render_template, g, redirect, url_for, flash, abort
+import sqlite3, datetime, time, pretty_age, graphs
 
 
 app = Flask(__name__)
@@ -25,6 +25,20 @@ def index():
     requests = format(requests)
 
     return render_template('show.html', requests=requests, elapsed=(time.time() - start))
+
+@app.route('/stats/')
+def stats():
+    if not app.config['ENABLE_GRAPHS']:
+        abort(404)
+    cur = g.db.execute('select id, player_name, assigned_mod, request_time, request, close_message, status from modreq_requests where status=0 order by id desc')
+    requests = [dict(id=row[0], player=row[1], mod=row[2], time=row[3], request=row[4], comment=row[5], status=row[6]) for row in cur.fetchall()]
+    graphs.donut(requests, 'static/donut_totals.png')
+    graphs.donut(requests, 'static/donut_totals.svg')
+    graphs.bar(requests, 'static/bar_totals.png')
+    graphs.bar(requests, 'static/bar_totals.svg')
+    graphs.modreqs_per_day(requests, 'static/per_day.png')
+    graphs.modreqs_per_day(requests, 'static/per_day.svg')
+    return render_template('stats.html')
 
 @app.route('/player/<username>/')
 def player(username):
