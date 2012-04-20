@@ -55,7 +55,7 @@ def format(requests):
 @app.errorhandler(404)
 def error_404(error):
     flash("404: That page could not be found.")
-    return index()
+    return index(), 404
 
     
 if __name__ == '__main__':
