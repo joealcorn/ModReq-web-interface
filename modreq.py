@@ -82,7 +82,7 @@ def format(requests):
 
 @app.errorhandler(404)
 def error_404(error):
-    flash("404: That page could not be found.")
+    flash("404: That resource could not be found.")
     return index(), 404
 
     
