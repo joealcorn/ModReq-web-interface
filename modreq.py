@@ -1,5 +1,5 @@
 from flask import Flask, render_template, g, redirect, url_for, flash, abort
-import sqlite3, datetime, time, pretty_age, graphs
+import sqlite3, datetime, time, pretty_age
 
 
 app = Flask(__name__)
@@ -30,6 +30,7 @@ def index():
 def stats():
     if not app.config['ENABLE_GRAPHS']:
         abort(404)
+    import graphs
     cur = g.db.execute('select id, player_name, assigned_mod, request_time, request, close_message, status from modreq_requests where status=0 order by id desc')
     requests = [dict(id=row[0], player=row[1], mod=row[2], time=row[3], request=row[4], comment=row[5], status=row[6]) for row in cur.fetchall()]
     graphs.donut(requests, 'static/donut_totals.png')
