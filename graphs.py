@@ -13,7 +13,6 @@ def active_mods(data):
 def modreqs_per_day(data, limit):
     tempTimes = []
     times = {}
-    daysAgo = []
     points = []
 
     for point in data:
@@ -31,7 +30,6 @@ def modreqs_per_day(data, limit):
         else:
             times[time] += 1
     for key in times:
-        daysAgo.append(key)
         points.append(times[key])
 
     return points
