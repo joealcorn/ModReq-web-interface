@@ -1,6 +1,10 @@
 <!doctype html>
-<title>ModReq</title>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+<head>
+        <title>ModReq {% block title %}{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    {% block head %}
+    {% endblock %}
+</head>
 <div class="page">
   <a href="{{ url_for('index') }}"><h1>ModReq</h1></a>
   <div class="metanav">

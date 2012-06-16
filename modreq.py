@@ -1,5 +1,5 @@
 from flask import Flask, render_template, g, redirect, url_for, flash, abort
-import sqlite3, datetime, time, pretty_age
+import sqlite3, datetime, time, pretty_age, graphs
 
 
 app = Flask(__name__)
@@ -11,11 +11,11 @@ def connect_db():
 @app.before_request
 def before_request():
     g.db = connect_db()
-    
+
 @app.teardown_request
 def teardown_request(exception):
     g.db.close()
-    
+
 
 @app.route('/')
 def index():
@@ -28,18 +28,14 @@ def index():
 
 @app.route('/stats/')
 def stats():
-    if not app.config['ENABLE_GRAPHS']:
-        abort(404)
-    import graphs
+
     cur = g.db.execute('select id, player_name, assigned_mod, request_time, request, close_message, status from modreq_requests where status=0 order by id desc')
     requests = [dict(id=row[0], player=row[1], mod=row[2], time=row[3], request=row[4], comment=row[5], status=row[6]) for row in cur.fetchall()]
-    graphs.donut(requests, 'static/donut_totals.png')
-    graphs.donut(requests, 'static/donut_totals.svg')
-    graphs.bar(requests, 'static/bar_totals.png')
-    graphs.bar(requests, 'static/bar_totals.svg')
-    graphs.modreqs_per_day(requests, 'static/per_day.png')
-    graphs.modreqs_per_day(requests, 'static/per_day.svg')
-    return render_template('stats.html')
+
+    active_mods = graphs.active_mods(requests)
+    reqs_per_day = graphs.modreqs_per_day(requests, app.config['PER_DAY_GRAPH_LIMIT'])
+
+    return render_template('stats.html', active_mods=active_mods, per_day=reqs_per_day)
 
 @app.route('/player/<username>/')
 def player(username):
@@ -85,6 +81,6 @@ def error_404(error):
     flash("404: That resource could not be found.")
     return index(), 404
 
-    
+
 if __name__ == '__main__':
     app.run()

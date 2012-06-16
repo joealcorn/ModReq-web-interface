@@ -1,10 +1,75 @@
 {% extends "layout.html" %}
+{% block title %}| Stats{% endblock %}
+
+{% block head %}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script name="busiest_mods_pie" type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Moderator', 'Requests Handled'],
+          {% for mod in active_mods %}
+            ['{{ mod }}', {{ active_mods[mod] }}],
+          {% endfor %}
+        ]);
+
+        var options = {
+          title: 'Requests handled by mod'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('pie_active_mods'));
+        chart.draw(data, options);
+      }
+    </script>
+
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Mod', 'Requests Handled'],
+          {% for mod in active_mods %}
+            ['{{ mod }}', {{ active_mods[mod] }}],
+          {% endfor %}
+        ]);
+
+        var options = {
+          title: 'Requests handled per mod',
+        };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('bar_active_mods'));
+        chart.draw(data, options);
+      }
+    </script>
+
+    <script name="per_day" type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Days ago', 'Number of requests'],
+          {% for item in per_day %}
+          ['{{ loop.index }}', {{ item }}],
+          {% endfor %}
+
+        ]);
+
+        var options = {
+          title: 'Requests Per Day'
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('requests_per_day'));
+        chart.draw(data, options);
+      }
+    </script>
+
+{% endblock %}
+
 {% block body %}
     <div class="stats_page">
-    <p>Requests per day</p>
-        <a href="{{ url_for('static', filename='per_day.svg') }}"><img class="graph" src="{{ url_for('static', filename='per_day.png') }}"></a><br>
-    <p>Busiest mods</p>
-        <a href="{{ url_for('static', filename='bar_totals.svg') }}"><img class="graph" src="{{ url_for('static', filename='bar_totals.png') }}"></a><br>
-        <a href="{{ url_for('static', filename='donut_totals.svg') }}"><img class="graph" src="{{ url_for('static', filename='donut_totals.png') }}"></a>
+        <div id="requests_per_day" style="width: 700px; height: 500px;"></div>
+        <div id="pie_active_mods" style="width: 700px; height: 500px;"></div>
+        <div id="bar_active_mods" style="width: 700px; height: 500px;"></div>
     </div>
 {% endblock %}
