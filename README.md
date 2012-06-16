@@ -7,6 +7,6 @@ Requires Flask & sqlite3
 
 [example](http://buttscicl.es/stuff/modreq/)
 
-![](https://github.com/buttscicles/ModReq-web-interface/screenshots/home.png)
+![](https://github.com/buttscicles/ModReq-web-interface/raw/master/screenshots/home.png)
 
-![](https://github.com/buttscicles/ModReq-web-interface/screenshots/stats.png)
+![](https://github.com/buttscicles/ModReq-web-interface/raw/master/screenshots/stats.png)
